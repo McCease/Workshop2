@@ -1,6 +1,8 @@
 <?php
 class Order
 {
+    static private $conn;
+
     protected $id;
     public $status;
     protected $user_id;
@@ -30,18 +32,32 @@ class Order
 
     public function deleteOrder(){
         $sqlStatement= "DELETE FROM orders WHERE id=$this->id";
-        if (User::$conn->query($sqlStatement) === TRUE) {
+        if (Order::$conn->query($sqlStatement) === TRUE) {
             return TRUE;
         }
         //error
         return FALSE;
     }
 
-    public function addItem($item_id, $q){
-        $this->items[]=array("item_id"=>$item_id, "quantity"=>$q);
+    public function addItem($item_id){
+        if(!isset($this->items[$item_id])) {
+            $this->items[$item_id] = 1;
+        } else {
+            $this->items[$item_id] += 1;
+        }
     }
-    //public function CHANGE QUANTITY
-    //public function DELETE ITEM
+
+    public function changeQuantity($item_id, $newq){
+        $this->items[$item_id]=$newq;
+    }
+
+    public function removeItem($item_id){
+        unset($this->items[$item_id]);
+
+        //albo tak: unset($this->(items)[$item_id]);
+
+    }
+
     public static function NewOrder($id){
         return new Order($id);
     }

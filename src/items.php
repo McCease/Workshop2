@@ -1,6 +1,8 @@
 <?php
 class Item{
 
+    static private $conn;
+
     protected $id;
     protected $name;
     protected $price;
@@ -41,9 +43,9 @@ class Item{
 
     public static function GetItemsFrom($cat){
         if($cat==='all'){
-            $sqlStatement = "SELECT FROM items";
+            $sqlStatement = "SELECT * FROM items";
         } else {
-            $sqlStatement = "SELECT FROM items WHERE category_id=$cat";
+            $sqlStatement = "SELECT * FROM items WHERE category_id=$cat";
         }
         $result = Item::$conn->query($sqlStatement);
         if ($result->num_rows > 0) {

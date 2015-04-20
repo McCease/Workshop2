@@ -2,7 +2,7 @@
 require_once("users.php");
 require_once("categories.php");
 require_once("items.php");
-
+require_once("admins.php");
 
 
 $configDB = array(
@@ -22,8 +22,9 @@ if ($conn->connect_error) {
 
 //setting connections for clases
 User::SetConnection($conn);
-Category::SetConnection($conn);
-Item::SetConnection($conn);
 
+Item::SetConnection($conn);
+Admin::SetConnection($conn);
+Category::SetConnection($conn);
 
 ?>

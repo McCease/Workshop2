@@ -1,0 +1,142 @@
+<?xml version="1.0" ?>
+<dataset>
+    <Users
+            id="1"
+			email="Test1@gmail.com"
+            name="Test1"
+            surname="Testowy1"
+			address="ul.Testowa1"
+			phone="111111111"
+            password="3858f62230ac3c915f300c664312c63f"
+            />
+			
+	<Users
+            id="2"
+			email="Test2@gmail.com"
+            name="Test2"
+            surname="Testowy2"
+			address="ul.Testowa2"
+			phone="222222222"
+            password="3858f62230ac3c915f300c664312c63f"
+            />
+			
+	<Users
+            id="3"
+			email="Test3@gmail.com"
+            name="Test3"
+            surname="Testowy3"
+			address="ul.Testowa3"
+			phone="333333333"
+            password="3858f62230ac3c915f300c664312c63f"
+            />
+			
+	<Users
+            id="4"
+			email="Test4@gmail.com"
+            name="Test4"
+            surname="Testowy4"
+			address="ul.Testowa4"
+			phone="444444444"
+            password="3858f62230ac3c915f300c664312c63f"
+            />
+			
+	<Users
+            id="5"
+			email="Test5@gmail.com"
+            name="Test5"
+            surname="Testowy5"
+			address="ul.Testowa5"
+			phone="555555555"
+            password="3858f62230ac3c915f300c664312c63f"
+            />
+			
+	<Categories
+            id="1"
+            name="a1"
+			parent_id="1"
+			/>	
+
+	<Categories
+            id="2"
+            name="a2"
+			parent_id="2"
+			/>	
+			
+	<Categories
+            id="3"
+            name="a3"
+			parent_id="3"
+			/>	
+	
+	<Categories
+            id="4"
+            name="a4"
+			parent_id="4"
+			/>	
+			
+	
+	<Items
+            id="1"
+            name="a1"
+			price="1.00"
+			description="Opis1"
+			quantity="1"
+			category_id="1"
+			is_visible="TRUE"
+			/>	
+			
+	<Items
+            id="2"
+            name="a2"
+			price="2.00"
+			description="Opis2"
+			quantity="2"
+			category_id="2"
+			is_visible="TRUE"
+			/>			
+	<Items
+            id="3"
+            name="a3"
+			price="3.50"
+			description="Opis3"
+			quantity="3"
+			category_id="3"
+			is_visible="TRUE"
+			/>	
+	<Items
+            id="4"
+            name="a4"
+			price="4.00"
+			description="Opis4"
+			quantity="4"
+			category_id="4"
+			is_visible="TRUE"
+			/>			
+	<Items
+            id="5"
+            name="a5"
+			price="5.00"
+			description="Opis5"
+			quantity="5"
+			category_id="1"
+			is_visible="TRUE"
+			/>	
+	<Items
+            id="6"
+            name="a6"
+			price="6.00"
+			description="Opis6"
+			quantity="6"
+			category_id="1"
+			is_visible="TRUE"
+			/>
+	<Items
+            id="7"
+            name="a7"
+			price="7.00"
+			description="Opis7"
+			quantity="7"
+			category_id="2"
+			is_visible="TRUE"
+			/>	
+</dataset>

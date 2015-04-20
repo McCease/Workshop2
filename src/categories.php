@@ -1,6 +1,8 @@
 <?php
 class Category{
 
+    static private $conn;
+
     protected $id;
     protected $name;
     protected $parent_id;
@@ -20,7 +22,7 @@ class Category{
 
     public static function GetAllCategories(){
 
-        $sqlStatement = "SELECT FROM categories";
+        $sqlStatement = "SELECT * FROM categories";
 
         $result = Category::$conn->query($sqlStatement);
         if ($result->num_rows > 0) {
@@ -46,7 +48,7 @@ class Category{
 
     public function deleteCategory(){
         $sqlStatement = "DELETE FROM categories WHERE id=$this->id";
-        return Item::$conn->query($sqlStatement);
+        return Category::$conn->query($sqlStatement);
     }
 
     //Pobieranie danych kategorii
@@ -55,7 +57,7 @@ class Category{
     }
     public function getName(){
     return $this->name;
-}
+    }
     public function getParent_id(){
         return $this->parent_id;
     }

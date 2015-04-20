@@ -1,6 +1,8 @@
 <?php
 class User{
 
+    static private $conn;
+
     protected $id;
     protected $email;
     protected $name;
@@ -32,21 +34,21 @@ class User{
     }
 
     public static function GetAllUsers(){
-        $sqlStatement = "SELECT FROM users";
+        $sqlStatement = "SELECT * FROM users";
         $result = User::$conn->query($sqlStatement);
         if ($result->num_rows > 0) {
             while($userData= $result->fetch_assoc()){
-                $ret[] = new User($userData['id'], $userData['name'], $userData['email'], $userData['name'], $userData['surname'], $userData['address'], $userData['phone'], $userData['password']);
+                $ret[] = new User($userData['id'], $userData['email'], $userData['name'], $userData['surname'], $userData['address'], $userData['phone'], $userData['password']);
             }
         }
         return $ret;
     }
     public static function AuthenticateUser($email, $password){
-        $sqlStatement = "SELECT FROM users WHERE email=$email";
+        $sqlStatement = "SELECT * FROM users WHERE email=$email";
         $result = User::$conn->query($sqlStatement);
         if ($result->num_rows != 1) {
             $userData = $result->fetch_assoc();
-            $user = new User($userData['id'], $userData['name'], $userData['email'], $userData['name'], $userData['surname'], $userData['address'], $userData['phone'], $userData['password']);
+            $user = new User($userData['id'], $userData['email'], $userData['name'], $userData['surname'], $userData['address'], $userData['phone'], $userData['password']);
 
             if($user->authenticate($password)){
                 //User logged
@@ -96,4 +98,35 @@ class User{
     }
 
     //public function sendMail(){}
+    public function getId(){
+        return $this->id;
+    }
+    public function getName(){
+        return $this->name;
+    }
+    public function getSurname(){
+        return $this->surname;
+    }
+    public function getEmail(){
+        return $this->email;
+    }
+    public function getAddress(){
+        return $this->address;
+    }
+    public function getPhone(){
+        return $this->phone;
+    }
+
+
+    private function __construct($newId, $newEmail, $newName, $newSurname, $newAddress, $newPhone, $newPassword)
+    {
+        $this->id = $newId;
+        $this->email = $newEmail;
+        $this->name = $newName;
+        $this->surname = $newSurname;
+        $this->address = $newAddress;
+        $this->phone = $newPhone;
+        $this->password = $newPassword;
+    }
+
 }
