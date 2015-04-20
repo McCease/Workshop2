@@ -1,5 +1,5 @@
 <?php
-header('Content-type: text/html; charset=utf-8');
+//header('Content-type: text/html; charset=utf-8');
 
 require 'src\AltoRouter.php';
 require 'src\connection.php';

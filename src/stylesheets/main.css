@@ -13,3 +13,6 @@ input{
 
     margin : 0px;
 }
+img {
+    display: inline-block;
+}
