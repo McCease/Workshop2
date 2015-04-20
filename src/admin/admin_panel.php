@@ -1,12 +1,13 @@
 <?php
 header('Content-type: text/html; charset=utf-8');
 
-//mozna usunac po wstawieniu w dzialanie indexu
-require("connection.php");
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
+}
+
+if($_SESSION["email"]!='ADMIN'){
+    header("Location: http://localhost/workshop2/");
 }
 
 echo '<h1>PANEL ADMINISTRACYJNY</h1>';

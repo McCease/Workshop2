@@ -1,0 +1,15 @@
+.hidden{
+    visibility: hidden;
+    position: fixed;
+    top:-1000px;
+}
+
+body {
+    background-image: url('/workshop2/src/bg13.jpg');
+    background-size: 100%;
+}
+
+input{
+
+    margin : 0px;
+}

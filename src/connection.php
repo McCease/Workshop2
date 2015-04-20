@@ -1,9 +1,9 @@
 <?php
-require_once("users.php");
-require_once("categories.php");
-require_once("items.php");
-require_once("admins.php");
-
+require_once("classes/users.php");
+require_once("classes/categories.php");
+require_once("classes/items.php");
+require_once("classes/admins.php");
+require_once("classes/orders.php");
 
 $configDB = array(
     'servername' => "localhost",
@@ -22,9 +22,8 @@ if ($conn->connect_error) {
 
 //setting connections for clases
 User::SetConnection($conn);
-
 Item::SetConnection($conn);
 Admin::SetConnection($conn);
 Category::SetConnection($conn);
-
+Order::SetConnection($conn);
 ?>

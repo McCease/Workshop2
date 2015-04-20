@@ -22,14 +22,14 @@ class User{
         //TU mozna dołożyc sanityzację
         $options = [
             'cost' => 11,
-            'salt' => mcrypt_create_iv(22, MCRYPT_RANDOM),
+            'salt' => mcrypt_create_iv(22, MCRYPT_RAND),
         ];
         $hash_pass= password_hash($pass, PASSWORD_BCRYPT, $options);
         $sqlStatement = "INSERT INTO users(email, name, surname, address, phone, password) values ('$e','$n','$s','$a',$p,'$hash_pass')";
         $result = User::$conn->query($sqlStatement);
-        if ($result->num_rows == 1) {
-            $userData = $result->fetch_assoc();
-            return new User($userData['id'], $userData['name'], $userData['email'], $userData['name'], $userData['surname'], $userData['address'], $userData['phone'], $userData['password']);
+        if ($result==true) {
+            $id=User::$conn->insert_id;
+            return new User($id, $e, $n, $s, $a, $p, $hash_pass);
         }
     }
 
@@ -44,15 +44,17 @@ class User{
         return $ret;
     }
     public static function AuthenticateUser($email, $password){
-        $sqlStatement = "SELECT * FROM users WHERE email=$email";
+        $sqlStatement = "SELECT * FROM users WHERE email='$email'";
         $result = User::$conn->query($sqlStatement);
-        if ($result->num_rows != 1) {
-            $userData = $result->fetch_assoc();
-            $user = new User($userData['id'], $userData['email'], $userData['name'], $userData['surname'], $userData['address'], $userData['phone'], $userData['password']);
+        if($result==true) {
+            if ($result->num_rows > 0) {
+                $userData = $result->fetch_assoc();
+                $user = new User($userData['id'], $userData['email'], $userData['name'], $userData['surname'], $userData['address'], $userData['phone'], $userData['password']);
 
-            if($user->authenticate($password)){
-                //User logged
-                return $user;
+                if ($user->authenticate($password)) {
+                    //User logged
+                    return $user;
+                }
             }
         }
         //No user or auth fail
