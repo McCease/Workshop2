@@ -36,7 +36,7 @@ $match = $router->match();
 session_start();
 
 
-echo "<HTML><HEAD>";
+echo "<!DOCTYPE html><HTML><HEAD>";
 echo "<link rel='stylesheet' href='src/stylesheets/jquery.sidr.dark.css'>";
 echo "<link rel='stylesheet' href='src/stylesheets/main.css'>";
 echo "</HEAD><BODY>";
