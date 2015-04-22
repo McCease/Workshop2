@@ -41,6 +41,17 @@ class Item{
         return FALSE;
     }
 
+    public static function GetItemsNames($arr){
+        $sqlStatement = "SELECT name, price FROM items WHERE id IN $arr";
+        $result = Item::$conn->query($sqlStatement);
+        if ($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()){
+                $ret[] = array($row["name"],$row["price"]);
+            }
+        }
+        return $ret;
+    }
+
     public static function GetItemsFrom($cat){
         if($cat==='all'){
             $sqlStatement = "SELECT * FROM items";

@@ -8,6 +8,7 @@ class Order
     protected $user_id;
     public $date;
     public $items;
+    public $summary;
 
     public static function SetConnection($newConnection){
         Order::$conn = $newConnection;

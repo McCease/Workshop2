@@ -73,7 +73,7 @@
             // Open Sidr
             if('open' === action || ('toggle' === action && !$menu.is(':visible'))) {
                 // Check if we can open it
-                if( $menu.is(':visible') || sidrMoving ) {
+                /*if( $menu.is(':visible') || sidrMoving ) {
                     return;
                 }
 

@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (!is_null($user)) {
             $_SESSION["email"]=$user->getEmail();
             $_SESSION["id"]=$user->getId();
-            header("Location: http://localhost/Workshop2/main");
+            header("Location: http://localhost/Workshop2/");
             die();
         } else {
             echo "<script>alert('WRONG LOGIN DATA!')</script>";
@@ -42,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <input type="text" value="" name="phone" placeholder="Phone number"><br>
     <input type="hidden" value="register" name="type">
 
-    <button type="submit">Sign Up</button>
+    <button class='btn big-btn' type="submit">Sign Up</button>
 </form>
 <br>
 <h1>Sign In</h1>
@@ -52,5 +52,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <input type="password" value="" name="password" required placeholder="Password"><br>
     <input type="hidden" value="login" name="type">
 
-    <button type="submit">Sign In</button>
+    <button class='btn big-btn' type="submit">Sign In</button>
 </form>

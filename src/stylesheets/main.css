@@ -3,10 +3,39 @@
     position: fixed;
     top:-1000px;
 }
+.container{
+    min-width: 50%;
+    display: block;
+    margin-top: 0px;
+    margin-left: 270px;
+    margin-right: 270px;
+    padding: 0px;
+}
+.logo{
+    height: 100px;
+}
 
+header{
+    color: #e9e9e9;
+    font-size: 30px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    width: 100%;
+
+    border-top-width: 0px;
+    padding-top: 0;
+    margin-top: 0px;
+    background-image: linear-gradient(to bottom, rgb(48, 48, 48), rgb(104, 104, 104), rgb(17, 17, 17));
+}
+.slogan{
+    position: relative;
+    bottom: 40px;
+
+}
 body {
     background-image: url('/workshop2/src/bg13.jpg');
     background-size: 100%;
+    padding: 0;
+    margin: 0;
 }
 
 input{
@@ -14,5 +43,89 @@ input{
     margin : 0px;
 }
 img {
-    display: inline-block;
+    margin: 5px 10px;
+    display: inline;
+}
+
+.open-btn{
+    background-image: linear-gradient(to bottom, rgb(104, 104, 104), rgb(17, 17, 17));
+    color: #e9e9e9;
+    border: 1px solid;
+    border-radius:6px;
+    border-color: rgba(50, 50, 50, 1);
+
+    padding-top: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+
+    margin-top: 55px;
+
+
+    position: relative;
+
+}
+
+.sidr-class-item{
+    display: inline;
+}
+
+.sidr-class-btn{
+    background-image: linear-gradient(to bottom, rgb(104, 104, 104), rgb(17, 17, 17));
+    color: #e9e9e9;
+    border: 1px solid;
+    border-radius:6px;
+    border-color: rgba(50, 50, 50, 1);
+
+    padding-top: 10px;
+    padding-right: 16px;
+    padding-bottom: 10px;
+    padding-left: 16px;
+
+    margin: 0;
+}
+
+.sidr-class-btn, .sidr-class-big-btn{
+    padding: 15px 15px;
+    font-size: 20px;
+    width: 100%;
+}
+
+.sidr-class-summary{
+    position: absolute;
+    bottom: 5px;
+    width: 100%;
+}
+.sidr-class-summary-btn{
+    display: block;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.sidr-class-left{
+    float: left;
+    padding-left: 10px;
+}
+.sidr-class-right{
+    float: right;
+    padding-right: 10px;
+}
+.right{
+    float: right;
+    padding-right: 10px;
+}
+.left{
+    float: left;
+    padding-left: 10px;
+}
+.sidr input[type="text"], .sidr input[type="password"], .sidr input[type="email"]{
+    display: inline;
+}
+
+.sidr h1{
+    font-size: 18px;
+}
+a{
+    text-decoration: none;
 }
