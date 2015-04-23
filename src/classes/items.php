@@ -24,6 +24,19 @@ class Item{
         return null;
     }
 
+    public static function GetItem($id){
+        $sqlStatement = "SELECT * FROM items WHERE id=$id";
+        $result=Item::$conn->query($sqlStatement);
+        if ($result!= FALSE) {
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    return new Item($id, $row["name"], $row["price"], $row["description"], $row["quantity"], $row["category_id"], $row["is_visible"]);
+                }
+            }
+        }
+        return false;
+    }
+
     public function saveToDb(){
 
         $name=$this->name;
@@ -79,15 +92,48 @@ class Item{
         return $ret;
     }
 
+    public static function GetPromotedItems(){
+        $sqlStatement = "SELECT * FROM items WHERE is_promoted=TRUE AND is_visible=TRUE";
+        $result=Item::$conn->query($sqlStatement);
+        if ($result==false){
+            return false;
+        }
+        if ($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()){
+                $ret[] = new Item($row["id"], $row["name"], $row["price"], $row["description"], $row["quantity"], $row["category_id"], $row["is_visible"]);
+            }
+        }
+        return $ret;
+    }
+
+    public static function GetPicturesCarousel($cat=0){
+        if ($cat==0){
+            $sqlStatement = "SELECT pictures.path_to_file, pictures.item_id FROM pictures INNER JOIN (SELECT MID(id) as minid, item_id FROM pictures GROUP BY item_id) minid on minid.minid pictures.id";
+        } else {
+            $sqlStatement = "SELECT pictures.path_to_file, pictures.item_id FROM pictures JOIN items ON pictures.item_id=items.id WHERE items.category_id=$cat AND items.is_promoted=1 INNER JOIN (SELECT MID(id) as minid, item_id FROM pictures GROUP BY item_id) minid on minid.minid pictures.id";
+        }
+        $result = Item::$conn->query($sqlStatement);
+        if($result==false) {
+            return false;
+        }
+        if ($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()){
+                $ret[] = array($row["item_id"] => $row["path_to_file"]);
+            }
+        }
+        return $ret;
+    }
+
     public function getPictures(){
-        $sqlStatement = "SELECT FROM pictures WHERE item_id=$this->id";
+        $sqlStatement = "SELECT * FROM pictures WHERE item_id=$this->id";
         $result = Item::$conn->query($sqlStatement);
         if ($result->num_rows > 0) {
             while($row = $result->fetch_assoc()){
                 $ret[] = $row;
             }
+            return $ret;
         }
-        return $ret;
+        return false;
     }
 
     public function deletePicture($id){

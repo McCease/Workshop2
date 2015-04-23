@@ -9,8 +9,7 @@ $router = new AltoRouter();
 $router->setBasePath('/Workshop2');
 $router->map('GET|POST','/', 'src\main.php');
 $router->map('GET|POST','/admin', 'src\administrator.php');
-$router->map('GET|POST', '/category/[i:category_id]', 'src\category.php');
-$router->map('GET|POST', '/item/[i:item_id]', 'src\item.php');
+
 //if admin logged
 if(isset($_SESSION["email"])){
     if($_SESSION["email"]=='ADMIN') {
@@ -19,10 +18,12 @@ if(isset($_SESSION["email"])){
         $router->map('GET|POST', '/category/[i:category_id]', 'src\admin\admin_category.php');
         $router->map('GET|POST', '/user', 'src\admin\admin_user.php');
     }else{
-        $router->map('GET|POST', '/cart', 'src\cart_summary.php');
+        $router->map('GET|POST', '/cart_summary', 'src\cart_summary.php');
         $router->map('GET|POST', '/user', 'src\user.php');
     }
 }
+$router->map('GET|POST', '/category/[i:category_id]', 'src\category.php');
+$router->map('GET|POST', '/item/[i:item_id]', 'src\item.php');
 /*
 $router->map('GET|POST','/friends', 'friends.php');
 $router->map('GET|POST','/users/[*:username]', 'users.php');
@@ -38,6 +39,8 @@ $match = $router->match();
 
 echo "<!DOCTYPE html><HTML><HEAD>";
 echo "<link rel='stylesheet' href='/../Workshop2/src/stylesheets/jquery.sidr.dark.css'>";
+echo "<link rel='stylesheet' href='/../Workshop2/src/stylesheets/owl.carousel.css'>";
+echo "<link rel='stylesheet' href='/../Workshop2/src/stylesheets/owl.theme.css'>";
 echo "<link rel='stylesheet' href='/../Workshop2/src/stylesheets/main.css'>";
 echo "</HEAD><BODY>";
 
@@ -115,7 +118,7 @@ echo "</div>";
 
 <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
 <script src="../../Workshop2/src/jquery.sidr.js"></script>
-
+<script src="../../Workshop2/src/owl.carousel.js"></script>
 <script>
     $(document).ready(function() {
 
@@ -135,7 +138,7 @@ echo "</div>";
             displace: false
         });
         $.sidr('open', 'sidr_left');
-        
+
 
 <?php
 if (isset($_SESSION["email"]))
@@ -149,5 +152,17 @@ if (isset($_SESSION["email"]))
  echo "$.sidr('open', 'sidr_right');";
 }
 ?>
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        $("#owl-carousel").owlCarousel({
+            autoPlay: 3000, //Set AutoPlay to 3 seconds
+            items : 4,
+            itemsDesktop : [1199,3],
+            itemsDesktopSmall : [979,3]
+        });
+
     });
 </script>
