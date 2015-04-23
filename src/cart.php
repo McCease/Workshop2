@@ -50,7 +50,8 @@ if (!null == $cart->items){
     ksort($items);
     foreach($items as $item_id => $quan){
         $total+=($names[$i][1]*$quan);
-        echo "<li>{$names[$i][0]} - $quan
+        echo "<li>{$names[$i][0]} -<div class='right'>$quan
+
             <form class='item' method='post' action=''>
             <input type='hidden' value='$item_id' name='item_id'>
             <input type='hidden' value='addItem' name='type'>
@@ -63,6 +64,7 @@ if (!null == $cart->items){
             <input type='hidden' value='$item_id' name='item_id'>
             <input type='hidden' value='delete' name='type'>
             <button type='submit' class='btn-small'>x</button></form>
+            </div>
             </li>";
         $i++;
     }
@@ -71,4 +73,4 @@ echo"</ul><div class='summary'><hr>";
 echo"<span class='left'>TOTAL: </span> <span class='right'> $total $ </span><br><br> ";
 
 
-echo"<a href='cart_summary'><button class='btn big-btn summary-btn'>Summary</button></a></div>";
+echo"<a href='/../Workshop2/cart_summary'><button class='btn big-btn summary-btn'>Summary</button></a></div>";

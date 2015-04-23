@@ -69,15 +69,18 @@ class Item{
         if($cat==='all'){
             $sqlStatement = "SELECT * FROM items";
         } else {
-            $sqlStatement = "SELECT * FROM items WHERE category_id=$cat";
+            $sqlStatement = "SELECT * FROM items WHERE is_visible=TRUE AND category_id=$cat";
         }
         $result = Item::$conn->query($sqlStatement);
+        if($result==false){
+            return false;
+        }
         if ($result->num_rows > 0) {
             while($row = $result->fetch_assoc()){
                 $ret[] = new Item($row["id"], $row["name"], $row["price"], $row["description"], $row["quantity"], $row["category_id"], $row["is_visible"]);
             }
+            return $ret;
         }
-        return $ret;
     }
 
     public static function GetItemsByOrderId($id){

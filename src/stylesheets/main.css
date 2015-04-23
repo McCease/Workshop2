@@ -191,11 +191,19 @@ a{
 }
 
 .sidr-class-btn-small{
-    display: inline;
+    display: inline-block;
     background-image: linear-gradient(to bottom, rgb(104, 104, 104), rgb(17, 17, 17));
     color: #e9e9e9;
     border: 1px solid;
     border-radius:6px;
     border-color: rgba(50, 50, 50, 1);
+    margin: 0 0;
+    width: 20px;
+    height: 20px;
+    font-size: 14px;
+}
+
+div>form.sidr-class-item {
+    display: inline;
     margin: 0;
 }

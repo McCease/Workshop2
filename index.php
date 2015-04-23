@@ -38,10 +38,11 @@ $match = $router->match();
 
 
 echo "<!DOCTYPE html><HTML><HEAD>";
+echo "<link rel='stylesheet' href='/../Workshop2/src/stylesheets/main.css'>";
 echo "<link rel='stylesheet' href='/../Workshop2/src/stylesheets/jquery.sidr.dark.css'>";
 echo "<link rel='stylesheet' href='/../Workshop2/src/stylesheets/owl.carousel.css'>";
 echo "<link rel='stylesheet' href='/../Workshop2/src/stylesheets/owl.theme.css'>";
-echo "<link rel='stylesheet' href='/../Workshop2/src/stylesheets/main.css'>";
+
 echo "</HEAD><BODY>";
 
 //Jesli uzytkownik jest zalogowany
@@ -78,12 +79,14 @@ foreach($categories as $category){
     $c_id=$category->getId();
     echo "<li><a href='/../Workshop2/category/$c_id'> $c_name </a><ul>";
     $items=Item::GetItemsFrom($c_id);
-    foreach($items as $item) {
-        $i_vis=$item->getIsVisible();
-        if($i_vis==1){
-            $i_name=$item->getName();
-            $i_id=$item->getId();
-            echo "<li><a href='/../Workshop2/item/$i_id'> $i_name</a></li>";
+    if($items!=false) {
+        foreach ($items as $item) {
+            $i_vis = $item->getIsVisible();
+            if ($i_vis == 1) {
+                $i_name = $item->getName();
+                $i_id = $item->getId();
+                echo "<li><a href='/../Workshop2/item/$i_id'> $i_name</a></li>";
+            }
         }
     }
     echo "</ul></li>";
@@ -146,8 +149,13 @@ if (isset($_SESSION["email"]))
     if ($_SESSION["email"]=='ADMIN') {
         echo "$.sidr('close', 'sidr_right');";
     }else{
-        echo "$.sidr('open', 'sidr_right');";
+        if(strpos($_SERVER['REQUEST_URI'], 'summary')!=false){
+            echo "$.sidr('close', 'sidr_right');";
+        }else{
+            echo "$.sidr('open', 'sidr_right');";
+        }
     }
+
 }else{
  echo "$.sidr('open', 'sidr_right');";
 }
