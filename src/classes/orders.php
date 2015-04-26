@@ -15,19 +15,18 @@ class Order
     }
 
     public function submitOrder(){
-        $this->date = date('YY-mm-dd');
+        $this->date = date('Y-m-d H:i:s');
         $this->status = 'realisation';
-        $sqlStatement = "INSERT INTO orders (status, user_id, date) VALUES ($this->status, $this->user_id, $this->date)";
+        $sqlStatement = "INSERT INTO orders (status, user_id, date) VALUES ('$this->status', $this->user_id, '$this->date')";
         Order::$conn->query($sqlStatement);
         $this->id=Order::$conn->insert_id;
         //ITEMY DO ITEMS ORDERS
-
         $temp_items='';
-        foreach($this->items as $row){
-            $temp_items.="($this->id, {$row['item_id']}, {$row['quantity']}),";
+        foreach($this->items as $item_id => $quan){
+            $temp_items.="('$this->id', $item_id, $quan),";
         }
         $temp_items=chop($temp_items, ',');
-        $sqlStatement = "INSERT INTO orders_items (order_id, item_id, quantity) VALUES ('$temp_items')";
+        $sqlStatement = "INSERT INTO orders_items (order_id, item_id, quantity) VALUES $temp_items";
         Order::$conn->query($sqlStatement);
     }
 
@@ -49,7 +48,11 @@ class Order
     }
 
     public function changeQuantity($item_id, $newq){
-        $this->items[$item_id]=$newq;
+        if(!$newq<1) {
+            $this->items[$item_id] = $newq;
+        }else{
+            $this->removeItem($item_id);
+        }
     }
 
     public function removeItem($item_id){

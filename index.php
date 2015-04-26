@@ -38,11 +38,11 @@ $match = $router->match();
 
 
 echo "<!DOCTYPE html><HTML><HEAD>";
-echo "<link rel='stylesheet' href='/../Workshop2/src/stylesheets/main.css'>";
+
 echo "<link rel='stylesheet' href='/../Workshop2/src/stylesheets/jquery.sidr.dark.css'>";
 echo "<link rel='stylesheet' href='/../Workshop2/src/stylesheets/owl.carousel.css'>";
 echo "<link rel='stylesheet' href='/../Workshop2/src/stylesheets/owl.theme.css'>";
-
+echo "<link rel='stylesheet' href='/../Workshop2/src/stylesheets/main.css'>";
 echo "</HEAD><BODY>";
 
 //Jesli uzytkownik jest zalogowany
