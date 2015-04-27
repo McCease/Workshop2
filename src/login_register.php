@@ -48,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <h1>Sign In</h1>
 <br>
 <form class="form-signin" name="login" method="post" action="#">
-    <input type="text" value="" name="email" required placeholder="E-mail"><br>
+    <input type="text" value="" name="email" autofocus required placeholder="E-mail"><br>
     <input type="password" value="" name="password" required placeholder="Password"><br>
     <input type="hidden" value="login" name="type">
 

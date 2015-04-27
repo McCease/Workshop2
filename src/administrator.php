@@ -19,11 +19,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 }
 ?>
-    <form name="login" method="post" action="">
+<div class="container">
+    <form class='adminlogin' name="login" method="post" action="">
 
-        <input type="email" value="" name="email" required placeholder="Administrator e-mail"><br>
-        <input type="password" value="" name="password" required placeholder="Password"><br>
+        <input type="email" class="toplogin" value="" autofocus name="email" required placeholder="Administrator e-mail"><br>
+        <input type="password" class="bottomlogin" value="" name="password" required placeholder="Password"><br>
         <input type="hidden" value="admin" name="type">
 
-        <button type="submit">Log in</button>
-    </form>
+        <button class="btn big2-btn" type="submit">Log in</button>
+    </form></div>

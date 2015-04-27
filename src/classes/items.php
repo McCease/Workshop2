@@ -16,7 +16,7 @@ class Item{
         Item::$conn = $newConnection;
     }
 
-    public static function addItem($n, $p, $d, $q, $c_id, $is, $is_p){
+    public static function addItem($n, $p, $d, $q=5, $c_id, $is, $is_p){
         $sqlStatement = "INSERT INTO items(name, price, description, quantity, category_id, is_visible, is_promoted) values ('$n', $p, '$d', $q, $c_id, $is, $is_p)";
         if (Item::$conn->query($sqlStatement) === TRUE) {
             return new Item(Item::$conn->insert_id, $n, $p, $d, $q, $c_id, $is, $is_p);

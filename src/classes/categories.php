@@ -20,6 +20,19 @@ class Category{
         return null;
     }
 
+    public static function GetCategory($id){
+
+        $sqlStatement = "SELECT * FROM categories WHERE id=$id";
+
+        $result = Category::$conn->query($sqlStatement);
+        if ($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()){
+                $ret = new Category($row["id"], $row["name"], $row["parent_id"]);
+            }
+        }else $ret=false;
+        return $ret;
+    }
+
     public static function GetAllCategories(){
 
         $sqlStatement = "SELECT * FROM categories";
@@ -38,7 +51,7 @@ class Category{
         $name=$this->name;
         $parent_id=$this->parent_id;
 
-        $sqlStatement = "UPDATE categoriess SET name=$name, parent_id=$parent_id where  id=$this->id";
+        $sqlStatement = "UPDATE categories SET name='$name', parent_id=$parent_id WHERE id=$this->id";
         if (Category::$conn->query($sqlStatement) === TRUE) {
             return TRUE;
         }

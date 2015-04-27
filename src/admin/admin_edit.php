@@ -77,7 +77,7 @@ if(strpos($_SERVER['REQUEST_URI'], 'item')!==false) {
     echo"</form>";
     echo "<br><form method='post' action='' enctype='multipart/form-data'>
     <input type='hidden' name='type' value='image'>
-    <input type='file' name='fileToUpload'>
+    <div class='upload'><input type='file' class='btn' name='fileToUpload'></div>
     <span class='right'><button class='btn' type='submit'>Upload Picture</button></form></span>";
 
     if(false!=$pictures){
@@ -89,7 +89,77 @@ if(strpos($_SERVER['REQUEST_URI'], 'item')!==false) {
     }
     echo "</div>";
 }elseif(strpos($_SERVER['REQUEST_URI'], 'category')!==false){
-    echo "AAAAAAAAA";
-}else{
+    $id = $match["params"]["category_id"];
+    $cat = Category::GetCategory($id);
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        if($_POST["type"]=='update_category'){
+            $name=$_POST["name"];
+            $cat->setName($name);
+            $cat->saveToDb();
+        }
+
+        if($_POST["type"]=='delete_category'){
+            $cat->deleteCategory();
+        }
+
+        if($_POST["type"]=='add_item'){
+            $n=$_POST["name"];
+            $p=$_POST["price"];
+            $d=$_POST["description"];
+            $c_id=$id;
+            $is=$_POST["is_visible"];
+            $is_p=$_POST["is_promoted"];
+            Item::addItem($n, $p, $d, $q, $c_id, $is, $is_p);
+        }
+    }
+
+    $name = $cat->getName();
+    $parent_id = $cat->getParent_id();
+
+    echo "<div class='container'>";
+    echo "<form method='post' action=''>";
+    echo "<input type='hidden' name='type' value='update_category'>";
+    echo "<br>Category id: <span class='right'>$id</span><br>";
+    echo "<br>Name: <span class='right'><input type='text' name='name' value='$name'></span><br>";
+    echo "<br>Parent id: <span class='right'>$parent_id</span><br>";
+    echo "<br><button class='btn submit-btn' type='submit'>Sumbit Your Changes</button>";
+    echo "</form><form><input type='hidden' name='type' value='delete_category'><button class='btn big-btn' type='submit'>Delete Category</button>";
+    echo "</form>";
+
+
+    echo "<form method='post' action=''>";
+    echo "<input type='hidden' name='type' value='add_item'>";
+    echo "<br>Name: <span class='right'><input type='text' name='name' value=''></span><br>";
+    echo "<br>Price: <span class='right'><input type='number' step='0.01' name='price' value=''></span><br>";
+    echo "<br>Desription: <br><textarea maxlength='255' cols='50' rows='6' name='description'>Description...</textarea><br>";
+    echo "<br>Category ID: <span class='right'>$id</span><br>";
+    echo "<br>Is item promoted?
+            <span class='right'>Yes <input type='radio' name='is_promoted' value='true' checked> No <input type='radio' name='is_promoted' value='false'></span>";
+    echo "<br>Should it be shown?
+            <span class='right'>Yes <input type='radio' name='is_visible' value='true' checked> No <input type='radio' name='is_visible' value='false'></span>";
+    echo "<br><button class='btn submit-btn' type='submit'>Add Item to Category</button>";
+    echo"</form></div>";
+}elseif(strpos($_SERVER['REQUEST_URI'], 'admin_panel')!==false){
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        if($_POST["type"]=='new_category'){
+            $p=0;
+            $n=$_POST["name"];
+            Category::AddCategory($n, $p);
+        }
+    }
+    echo "<div class='container'><div class='container'>";
+    echo "<form method='post' action=''>";
+    echo "<br>Name: <span class='right'><input type='text' name='name' value=''></span><br>";
+    echo "<input type='hidden' name='type' value='add_category'><button class='btn submit-btn' type='submit'>Add Category</button>";
+    echo "</form></div></div>";
+}elseif(strpos($_SERVER['REQUEST_URI'], 'order')!==false){
+    $id = $match["params"]["order_id"];
+    //$order=Order::GetOrder($id);
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        if($_POST["type"]=='edit_order'){
+
+        }
+    }
 
 }

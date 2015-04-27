@@ -25,6 +25,7 @@ if(isset($_SESSION["email"])){
         $router->map('GET|POST', '/user', 'src\user.php');
     }
 }
+$router->map('GET|POST', '/logout', 'src\logout.php');
 $router->map('GET|POST', '/category/[i:category_id]', 'src\category.php');
 $router->map('GET|POST', '/item/[i:item_id]', 'src\item.php');
 /*
