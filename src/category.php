@@ -29,4 +29,3 @@ if($items_cat!=false){
 
     echo "</div>";
 }
-?>

@@ -6,7 +6,7 @@ $pictures=$item->getPictures();
 if(false!=$pictures){
     echo "<div id='owl-carousel'>";
     foreach($pictures as $picture){
-        echo "<div class='item'><img src='../Workshop2/{$picture['path_to_file']}' alt='picture of item'></div>";
+        echo "<div class='item'><img src='../../Workshop2{$picture['path_to_file']}' alt='picture of item' height='150px'></div>";
     }
     echo "</div>";
 }

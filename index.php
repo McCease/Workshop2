@@ -16,7 +16,10 @@ if(isset($_SESSION["email"])){
         $router->map('GET|POST', '/admin_panel', 'src\admin\admin_panel.php');
         $router->map('GET|POST', '/item/[i:item_id]', 'src\admin\admin_item.php');
         $router->map('GET|POST', '/category/[i:category_id]', 'src\admin\admin_category.php');
-        $router->map('GET|POST', '/user', 'src\admin\admin_user.php');
+        $router->map('GET|POST', '/user/[i:user_id]', 'src\admin\admin_user.php');
+        $router->map('GET|POST', '/user', 'src\admin\admin_users.php');
+        $router->map('GET|POST', '/order/[i:order_id]', 'src\admin\admin_order.php');
+        $router->map('GET|POST', '/order', 'src\admin\admin_orders.php');
     }else{
         $router->map('GET|POST', '/cart_summary', 'src\cart_summary.php');
         $router->map('GET|POST', '/user', 'src\user.php');
@@ -96,6 +99,7 @@ if (isset($_SESSION["email"]))
     if ($_SESSION["email"]=='ADMIN')
     {
         echo "<li><a href='/../Workshop2/user'> Users </a></li>";
+        echo "<li><a href='/../Workshop2/order'> Orders </a></li>";
     }
 }
 

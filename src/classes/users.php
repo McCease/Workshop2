@@ -33,6 +33,16 @@ class User{
         }
     }
 
+    public static function GetUser($id){
+        $sqlStatement = "SELECT * FROM users WHERE id=$id";
+        $result = User::$conn->query($sqlStatement);
+        if ($result->num_rows > 0) {
+            while($userData= $result->fetch_assoc()){
+                return new User($userData['id'], $userData['email'], $userData['name'], $userData['surname'], $userData['address'], $userData['phone'], $userData['password']);
+            }
+        }
+    }
+
     public static function GetAllUsers(){
         $sqlStatement = "SELECT * FROM users";
         $result = User::$conn->query($sqlStatement);

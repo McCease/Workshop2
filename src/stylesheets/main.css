@@ -68,6 +68,21 @@ img {
 
 }
 
+.sidr-class-container{
+    width: 90%;
+    display: block;
+    margin-top: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0px;
+}
+
+.sidr textarea{
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .sidr-class-item{
     display: inline;
 }
@@ -87,10 +102,22 @@ img {
     margin: 0;
 }
 
-.sidr-class-btn, .sidr-class-big-btn{
+.sidr-class-open-btn{
+    margin: 15px;
+}
+.sidr-class-big-btn{
     padding: 15px 15px;
     font-size: 20px;
     width: 100%;
+}
+
+.sidr-class-submit-btn{
+    position: relative;
+    padding: 15px 15px;
+    font-size: 20px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    width: 40%;
 }
 
 .sidr-class-summary{
@@ -137,8 +164,8 @@ a{
 }
 #owl-carousel .item img{
     display: block;
-    width: 100%;
-    height: auto;
+    width: auto;
+    height: 150px;
 }
 .presented_item{
     width: 15.7%;
@@ -190,6 +217,12 @@ a{
     margin: 0;
 }
 
+.big-btn{
+    padding: 15px 15px;
+    font-size: 20px;
+    width: 20%;
+}
+
 .sidr-class-btn-small{
     display: inline-block;
     background-image: linear-gradient(to bottom, rgb(104, 104, 104), rgb(17, 17, 17));
@@ -228,7 +261,7 @@ div>form.sidr-class-item {
 .container li{
     padding: 10px;
 }
-.container input{
+.container ul input{
     text-align: right;
     width: 30px;
 }

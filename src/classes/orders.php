@@ -66,25 +66,75 @@ class Order
         return new Order($id);
     }
 
-    public static function GetOrdersByUserId($id)
+    public static function GetAllOrders()
     {
-        $sqlStatement = "SELECT FROM orders WHERE user_id=$id";
+        $sqlStatement = "SELECT * FROM orders";
 
         $result = Order::$conn->query($sqlStatement);
+        if($result==false){
+            return false;
+        }
+
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
-                $ret[] = new Order($row["id"], $row["status"], $row["user_id"], $row["date"]);
+                $sqlStatement = "SELECT * FROM orders_items WHERE order_id={$row["id"]}";
+                $result2 = Order::$conn->query($sqlStatement);
+                if ($result2->num_rows > 0) {
+                    while ($row2 = $result2->fetch_assoc()) {
+                        $items[] = array($row2["item_id"] => $row2["quantity"]);
+                    }
+                }
+                $ret[] = new Order( $row["user_id"], $row["status"], $row["date"], $row["id"], $items);
             }
         }
         return $ret;
     }
 
-    private function __construct($newUser_Id)
+    public static function GetOrdersByUserId($id)
     {
-        $this->id = NULL;
-        $this->status = 'cart';
+        $sqlStatement = "SELECT * FROM orders WHERE user_id=$id";
+
+        $result = Order::$conn->query($sqlStatement);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $sqlStatement = "SELECT * FROM orders_items WHERE order_id={$row["id"]}";
+                $result2 = Order::$conn->query($sqlStatement);
+                if ($result2->num_rows > 0) {
+                    while ($row2 = $result2->fetch_assoc()) {
+                        $items[] = array($row2["item_id"] => $row2["quantity"]);
+                    }
+                }
+                $ret[] = new Order( $row["user_id"], $row["status"], $row["date"], $row["id"], $items);
+            }
+        }else{
+            return false;
+        }
+        return $ret;
+    }
+
+    public function getId(){
+        return $this->id;
+    }
+    public function getUserId(){
+        return $this->user_id;
+    }
+    public function getStatus(){
+        return $this->status;
+    }
+    public function getDate(){
+        return $this->date;
+    }
+    public function getItems(){
+        return $this->items;
+    }
+
+    private function __construct($newUser_Id, $newStatus='cart', $newDate=0, $newId=NULL, $newItems=NULL)
+    {
+        $this->id = $newId;
+        $this->status = $newStatus;
         $this->user_id = $newUser_Id;
-        $this->date = 0;
-        $this->items = NULL;
+        $this->date = $newDate;
+        $this->items = $newItems;
     }
 }

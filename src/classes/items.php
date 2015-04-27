@@ -10,15 +10,16 @@ class Item{
     protected $quantity;
     protected $category_id;
     protected $is_visible;
+    protected $is_promoted;
 
     public static function SetConnection($newConnection){
         Item::$conn = $newConnection;
     }
 
-    public static function addItem($n, $p, $d, $q, $c_id, $is){
-        $sqlStatement = "INSERT INTO items(name, price, description, quantity, category_id, is_visible) values ('$n', $p, '$d', $q, $c_id, $is)";
+    public static function addItem($n, $p, $d, $q, $c_id, $is, $is_p){
+        $sqlStatement = "INSERT INTO items(name, price, description, quantity, category_id, is_visible, is_promoted) values ('$n', $p, '$d', $q, $c_id, $is, $is_p)";
         if (Item::$conn->query($sqlStatement) === TRUE) {
-            return new Item(Item::$conn->insert_id, $n, $p, $d, $q, $c_id, $is);
+            return new Item(Item::$conn->insert_id, $n, $p, $d, $q, $c_id, $is, $is_p);
         }
         //error
         return null;
@@ -30,7 +31,7 @@ class Item{
         if ($result!= FALSE) {
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
-                    return new Item($id, $row["name"], $row["price"], $row["description"], $row["quantity"], $row["category_id"], $row["is_visible"]);
+                    return new Item($id, $row["name"], $row["price"], $row["description"], $row["quantity"], $row["category_id"], $row["is_visible"], $row["is_promoted"]);
                 }
             }
         }
@@ -45,8 +46,9 @@ class Item{
         $quantity=$this->quantity;
         $category_id=$this->category_id;
         $is_visible=$this->is_visible;
+        $is_promoted=$this->is_promoted;
 
-        $sqlStatement = "UPDATE items SET name=$name, price=$price, description=$description, quantity=$quantity, category_id=$category_id, is_visible=$is_visible where  id=$this->id";
+        $sqlStatement = "UPDATE items SET name=$name, price=$price, description=$description, quantity=$quantity, category_id=$category_id, is_visible=$is_visible, is_promoted=$is_promoted where  id=$this->id";
         if (Item::$conn->query($sqlStatement) === TRUE) {
             return TRUE;
         }
@@ -69,7 +71,7 @@ class Item{
         if($cat==='all'){
             $sqlStatement = "SELECT * FROM items";
         } else {
-            $sqlStatement = "SELECT * FROM items WHERE is_visible=TRUE AND category_id=$cat";
+            $sqlStatement = "SELECT * FROM items WHERE category_id=$cat";
         }
         $result = Item::$conn->query($sqlStatement);
         if($result==false){
@@ -77,7 +79,7 @@ class Item{
         }
         if ($result->num_rows > 0) {
             while($row = $result->fetch_assoc()){
-                $ret[] = new Item($row["id"], $row["name"], $row["price"], $row["description"], $row["quantity"], $row["category_id"], $row["is_visible"]);
+                $ret[] = new Item($row["id"], $row["name"], $row["price"], $row["description"], $row["quantity"], $row["category_id"], $row["is_visible"], $row["is_promoted"]);
             }
             return $ret;
         }
@@ -89,7 +91,7 @@ class Item{
         $result = Item::$conn->query($sqlStatement);
         if ($result->num_rows > 0) {
             while($row = $result->fetch_assoc()){
-                $ret[] = new Item($row["id"], $row["name"], $row["price"], $row["description"], $row["quantity"], $row["category_id"], $row["is_visible"]);
+                $ret[] = new Item($row["id"], $row["name"], $row["price"], $row["description"], $row["quantity"], $row["category_id"], $row["is_visible"], $row["is_promoted"]);
             }
         }
         return $ret;
@@ -103,7 +105,7 @@ class Item{
         }
         if ($result->num_rows > 0) {
             while($row = $result->fetch_assoc()){
-                $ret[] = new Item($row["id"], $row["name"], $row["price"], $row["description"], $row["quantity"], $row["category_id"], $row["is_visible"]);
+                $ret[] = new Item($row["id"], $row["name"], $row["price"], $row["description"], $row["quantity"], $row["category_id"], $row["is_visible"], $row["is_promoted"]);
             }
         }
         return $ret;
@@ -144,22 +146,16 @@ class Item{
 
         return Item::$conn->query($sqlStatement);
     }
-    /*
-if($_FILES['fileToUpload']['type'] == 'image/gif' ||
-$_FILES['fileToUpload']['type'] == 'image/png' ||
-$_FILES['fileToUpload']['type'] == 'image/jpg' ||
-$_FILES['fileToUpload']['type'] == 'image/jpeg'){
-$tmpname=$_FILES['fileToUpload']['tmp_name']
-*/
+
     public function addPicture($filename, $tmpname){
 
-        $uploaddir='../images/';
+        $uploaddir='images/';
         $hashed=md5($filename);
 
         $uploaddir.=date('Ymd'). '/' . substr($hashed, 0 , 2) . '/' . substr($hashed, -2) . '/' ;
         $this->createPath($uploaddir);
 
-        $uploaddir = $uploaddir . '/' . $this->id . substr($filename,-4);
+        $uploaddir = $uploaddir . $this->id . substr($filename,-5);
 
         if(move_uploaded_file($tmpname, $uploaddir)) {
 
@@ -220,6 +216,9 @@ $tmpname=$_FILES['fileToUpload']['tmp_name']
     public function getIsVisible(){
         return $this->is_visible;
     }
+    public function getIsPromoted(){
+        return $this->is_promoted;
+    }
 
     //Ustawianie wartości obiektu
 
@@ -241,11 +240,15 @@ $tmpname=$_FILES['fileToUpload']['tmp_name']
     public function setIsVisible($is){
         $this->is_visible=$is;
     }
+    public function setIsPromoted($is){
+        $this->is_promoted=$is;
+    }
+
 
 
 
     //constructor
-    private function __construct($newId, $newName, $newPrice, $newDescription, $newQuantity, $newCategory_id, $newIs_visible){
+    private function __construct($newId, $newName, $newPrice, $newDescription, $newQuantity, $newCategory_id, $newIs_visible, $newIs_promoted){
         $this->id = $newId;
         $this->name = $newName;
         $this->price = $newPrice;
@@ -253,6 +256,6 @@ $tmpname=$_FILES['fileToUpload']['tmp_name']
         $this->quantity = $newQuantity;
         $this->category_id=$newCategory_id;
         $this->is_visible=$newIs_visible;
-
+        $this->is_promoted=$newIs_promoted;
     }
 }
