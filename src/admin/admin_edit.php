@@ -153,13 +153,70 @@ if(strpos($_SERVER['REQUEST_URI'], 'item')!==false) {
     echo "<br>Name: <span class='right'><input type='text' name='name' value=''></span><br>";
     echo "<input type='hidden' name='type' value='add_category'><button class='btn submit-btn' type='submit'>Add Category</button>";
     echo "</form></div></div>";
-}elseif(strpos($_SERVER['REQUEST_URI'], 'order')!==false){
+}elseif(strpos($_SERVER['REQUEST_URI'], 'order/')!==false){
     $id = $match["params"]["order_id"];
-    //$order=Order::GetOrder($id);
+    $order=Order::GetOrder($id);
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if($_POST["type"]=='edit_order'){
-
+            $order->setStatus($_POST["status"]);
         }
     }
 
+    $date=$order->getDate();
+    $status=$order->getStatus();
+
+    echo "<form method='post' action=''>";
+    echo "<input type='hidden' name='type' value='edit_order'>";
+    echo "<br>Order ID: <span class='right'>$id</span><br>";
+    echo "<br>Date: <span class='right'>$date</span><br>";
+    if($status=='realisation'){
+        echo "<br>Order Status
+            <span class='right'>Realisation <input type='radio' name='status' value='realisation' checked> Realized <input type='radio' name='status' value='realized'> Canceled<input type='radio' name='status' value='canceled'></span>";
+    }elseif($status=='realized'){
+        echo "<br>Order Status
+            <span class='right'>Realisation <input type='radio' name='status' value='realisation'> Realized <input type='radio' name='status' value='realized'  checked> Canceled<input type='radio' name='status' value='canceled'></span>";
+    }elseif($status=='canceled'){
+        echo "<br>Order Status
+            <span class='right'>Realisation <input type='radio' name='status' value='realisation'> Realized <input type='radio' name='status' value='realized'> Canceled<input type='radio' name='status' value='canceled' checked></span>";
+    }
+    echo "<br><button class='btn submit-btn' type='submit'>Sumbit Your Changes</button>";
+    echo"</form>";
+
+    echo"<ul>";
+    $total=0;
+    if (!null == $order->items){
+        $items=$order->items;
+        $str='(';
+        foreach($items as $item_id => $quan){
+            $str.=$item_id . ',';
+        }
+
+        $str=chop($str,",");
+        $str.=')';
+        $names=Item::GetItemsNames($str);
+        $i=0;
+        ksort($items);
+        foreach($items as $item_id => $quan){
+            $total+=($names[$i][1]*$quan);
+            echo "<li>{$names[$i][0]} -<div class='right'>$quan
+
+            <form class='item' method='post' action=''>
+            <input type='hidden' value='$item_id' name='item_id'>
+            <input type='hidden' value='addItem' name='type'>
+            <button type='submit' class='btn-small'>+</button></form>
+            <form class='item' method='post' action=''>
+            <input type='hidden' value='$item_id' name='item_id'>
+            <input type='hidden' value='subst' name='type'>
+            <button type='submit' class='btn-small'>-</button></form>
+            <form class='item' method='post' action=''>
+            <input type='hidden' value='$item_id' name='item_id'>
+            <input type='hidden' value='delete' name='type'>
+            <button type='submit' class='btn-small'>x</button></form>
+            </div>
+            </li>";
+            $i++;
+        }
+    }
+    echo"</ul><hr>";
+    echo"<span class='left'>TOTAL: </span> <span class='right'> $total $ </span><br><br>";
 }

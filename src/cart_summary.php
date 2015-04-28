@@ -18,7 +18,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $cart->changeQuantity($item_id, $quan);
             }
             $cart->submitOrder();
-            var_dump($cart);
             header("Location: http://localhost/Workshop2/");
             unset($_SESSION["cart"]);
             die();

@@ -81,13 +81,36 @@ class Order
                 $result2 = Order::$conn->query($sqlStatement);
                 if ($result2->num_rows > 0) {
                     while ($row2 = $result2->fetch_assoc()) {
-                        $items[] = array($row2["item_id"] => $row2["quantity"]);
+                        $items[$row2["item_id"]] = $row2["quantity"];
                     }
                 }
                 $ret[] = new Order( $row["user_id"], $row["status"], $row["date"], $row["id"], $items);
             }
         }
         return $ret;
+    }
+
+    public static function GetOrder($id)
+    {
+        $sqlStatement = "SELECT * FROM orders where id=$id";
+
+        $result = Order::$conn->query($sqlStatement);
+        if($result==false){
+            return false;
+        }
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $sqlStatement = "SELECT * FROM orders_items WHERE order_id={$row["id"]}";
+                $result2 = Order::$conn->query($sqlStatement);
+                if ($result2->num_rows > 0) {
+                    while ($row2 = $result2->fetch_assoc()) {
+                        $items[$row2["item_id"]] = $row2["quantity"];
+                    }
+                }
+                return new Order($row["user_id"], $row["status"], $row["date"], $row["id"], $items);
+            }
+        }
     }
 
     public static function GetOrdersByUserId($id)
@@ -128,7 +151,14 @@ class Order
     public function getItems(){
         return $this->items;
     }
-
+    public function setStatus($status){
+        $this->status=$status;
+        $sqlStatement = "UPDATE orders SET status='$status' WHERE id=$this->id";
+        if (Order::$conn->query($sqlStatement) === TRUE) {
+            return TRUE;
+        }
+        return FALSE;
+    }
     private function __construct($newUser_Id, $newStatus='cart', $newDate=0, $newId=NULL, $newItems=NULL)
     {
         $this->id = $newId;

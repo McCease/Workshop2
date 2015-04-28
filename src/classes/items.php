@@ -63,6 +63,8 @@ class Item{
             while($row = $result->fetch_assoc()){
                 $ret[] = array($row["name"],$row["price"]);
             }
+        }else{
+            $ret=false;
         }
         return $ret;
     }
