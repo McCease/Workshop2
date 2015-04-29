@@ -22,20 +22,12 @@ if(isset($_SESSION["email"])){
         $router->map('GET|POST', '/order', 'src\admin\admin_orders.php');
     }else{
         $router->map('GET|POST', '/cart_summary', 'src\cart_summary.php');
-        $router->map('GET|POST', '/user', 'src\user.php');
+        $router->map('GET|POST', '/user/[i:user_id]', 'src\user.php');
     }
 }
 $router->map('GET|POST', '/logout', 'src\logout.php');
 $router->map('GET|POST', '/category/[i:category_id]', 'src\category.php');
 $router->map('GET|POST', '/item/[i:item_id]', 'src\item.php');
-/*
-$router->map('GET|POST','/friends', 'friends.php');
-$router->map('GET|POST','/users/[*:username]', 'users.php');
-$router->map('GET|POST','/settings/[*:username]', 'settings.php');
-$router->map('GET|POST','/logout', 'logout.php');
-$router->map('GET|POST','/send_message_to/[*:username]', 'sending.php');
-$router->map('GET|POST','/posts/[i:post_id]', 'post.php');
-*/
 
 $match = $router->match();
 

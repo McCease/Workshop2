@@ -129,6 +129,34 @@ class User{
         return $this->phone;
     }
 
+    public function setName($name){
+        $this->name=$name;
+    }
+    public function setSurame($surname){
+        $this->surname=$surname;
+    }
+    public function setAddress($address){
+        $this->address=$address;
+    }
+    public function setPhone($phone){
+        $this->phone=$phone;
+    }
+
+    public function saveToDb(){
+
+        $name=$this->name;
+        $surname=$this->surname;
+        $address=$this->address;
+        $phone=$this->phone;
+
+        $sqlStatement = "UPDATE users SET name=$name, surname=$surname, address=$address, phone=$phone WHERE  id=$this->id";
+        if (User::$conn->query($sqlStatement) === TRUE) {
+            return TRUE;
+        }
+        //error
+        return FALSE;
+    }
+
 
     private function __construct($newId, $newEmail, $newName, $newSurname, $newAddress, $newPhone, $newPassword)
     {

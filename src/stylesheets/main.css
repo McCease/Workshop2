@@ -332,3 +332,29 @@ div>form.sidr-class-item {
     font-size: 20px;
     width: 100%;
 }
+
+div.one_item input{
+    font-size: 13px;
+    padding: 5px;
+    box-sizing: border-box;
+    margin: 0 0 10px;
+    border-radius: 2px;
+    border: none;
+    background: rgba(0,0,0,0.1);
+    color: rgba(255,255,255,0.6);
+    display: block;
+    clear: both;
+}
+
+div.one_item textarea{
+    font-size: 13px;
+    padding: 5px;
+    box-sizing: border-box;
+    margin: 0 0 10px;
+    border-radius: 2px;
+    border: none;
+    background: rgba(0,0,0,0.1);
+    color: rgba(255,255,255,0.6);
+    display: block;
+    clear: both;
+}

@@ -17,8 +17,6 @@ if(strpos($_SERVER['REQUEST_URI'], 'item')!==false) {
             $item->setIsVisible($_POST["is_visible"]);
             $item->setIsPromoted($_POST["is_promoted"]);
         }
-        var_dump($_POST);
-        var_dump($_FILES['fileToUpload']['type']);
         if ($_POST["type"] == 'image') {
             if($_FILES['fileToUpload']['type'] == 'image/gif' ||
                 $_FILES['fileToUpload']['type'] == 'image/png' ||
@@ -29,7 +27,6 @@ if(strpos($_SERVER['REQUEST_URI'], 'item')!==false) {
                 $filename=$id . '_';
                 $filename.=$_FILES['fileToUpload']['name'];
                 $item->addPicture($filename,$tmpname);
-                echo "AAAAAAAAAAAAAAAAAAAAA";
             }
         }
         if ($_POST["type"] == 'delete') {
